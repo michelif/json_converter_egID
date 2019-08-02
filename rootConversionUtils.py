@@ -5,11 +5,6 @@ import os
 def writeJSON(sfDict,f):
     json.dump(sfDict,f,sort_keys=False,indent=4)
 
-def updateJSON(sfDict,f):
-    f_1 =  open(f.name,'r')
-    print(f.name)
-    json_data = json.load(f_1)
-    json_data.dump(sfDict,f_1,sort_keys=False,indent=4)
 
 def readFile(filename, th2name, idname, datasetname):
     idDict = OrderedDict() #OrderedDict keeps the order in which elements are inserted into the dictionary
@@ -35,8 +30,6 @@ def readFile(filename, th2name, idname, datasetname):
             sfDict[idname]["pt:["+str(ptAxis.GetBinLowEdge(iPt))+","+str(ptAxis.GetBinUpEdge(iPt))+"]"]["eta:["+str(etaAxis.GetBinLowEdge(iEta))+","+str(etaAxis.GetBinUpEdge(iEta))+"]"]["value"] = th2.GetBinContent(iEta,iPt)
             sfDict[idname]["pt:["+str(ptAxis.GetBinLowEdge(iPt))+","+str(ptAxis.GetBinUpEdge(iPt))+"]"]["eta:["+str(etaAxis.GetBinLowEdge(iEta))+","+str(etaAxis.GetBinUpEdge(iEta))+"]"]["error"] = th2.GetBinError(iEta,iPt)                
 
-    for x,y in sfDict.items():
-        print(x,y)
         
     f = open(datasetname+str("_")+idname+str(".json"),'w')
     writeJSON(sfDict,f)
