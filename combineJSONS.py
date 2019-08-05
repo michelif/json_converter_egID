@@ -1,5 +1,6 @@
 #usage python combineJSONS.py year
 import os, sys, json 
+from collections import OrderedDict
 
 json_list = []
 current_dir = os.getcwd()
@@ -13,11 +14,11 @@ for (path, dir, files) in os.walk(current_dir):
             json_path = "%s/%s" % (path, filename)
             json_list.append(json_path)
 
-json_combine = {}
+json_combine = OrderedDict()
 for k in json_list:
     print(k)
     with open(k) as json_data:
-        json_combine.update(json.load(json_data))
+        json_combine.update(json.load(json_data,object_pairs_hook=OrderedDict))
 
 f =  open(current_dir+'/./'+combined_filename,'w')
 json.dump(json_combine, f, sort_keys = False, indent = 4)
