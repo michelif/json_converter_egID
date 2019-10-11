@@ -1,10 +1,13 @@
-#include "json_wrapper.h"
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <map>
+#include <iostream>
 
 namespace pt = boost::property_tree;
 using namespace std;
 
-
-int read_json() {
+//https://stackoverflow.com/questions/4479017/storing-std-map-in-map
+int main() {
 
     pt::ptree tree;
     pt::read_json("run2_reco.json", tree);

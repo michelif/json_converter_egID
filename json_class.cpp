@@ -1,18 +1,53 @@
-#include "json_wrapper.h"
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <map>
+#include <iostream>
 
 namespace pt = boost::property_tree;
 using namespace std;
 
+class SF_Reader {
+    map< string, map< string, map< string, map< string, map<string, double> > > > > MAP_SF;
 
-int read_json() {
+    public:
+    void test ();
+    void read_json(string);
+    double value (string, string, string, string);
+    double error (string, string, string, string);
+    //double get_SF(string, string, string, string); //make pair out of this? (value, error) ?
+};
+
+int main () {
+    SF_Reader sf;
+    sf.read_json("run2_reco.json");
+    //sf.test ();
+    sf.error ("2016", "reco_sf", "pt:[20.0,45.0]", "eta:[1.444,1.566]");
+    sf.value ("2016", "reco_sf", "pt:[20.0,45.0]", "eta:[1.444,1.566]");
+    return 0;
+}
+
+void SF_Reader::test () {
+    cout << "test main:" << MAP_SF["2016"]["reco_sf"]["pt:[20.0,45.0]"]["eta:[1.444,1.566]"]["value"] << endl;
+}
+
+double SF_Reader::error(int year, string ID, string eta, string pt) { 
+    cout << "test main: error:" << year, ID, eta, pt << MAP_SF[year][ID][eta][pt]["error"] << endl;
+    return 0.0;
+}
+
+double SF_Reader::value(int year, string ID, string eta, string pt) { 
+    cout << "test main: value: " << year, ID, eta, pt << MAP_SF[year][ID][eta][pt]["value"] << endl;
+    return 0.0;
+}
+
+void SF_Reader::read_json(string json_file) {
 
     pt::ptree tree;
-    pt::read_json("run2_reco.json", tree);
+    pt::read_json(json_file, tree);
 
     int j =0;
 
     map< string, map< string, map< string, map< string, map<string, double> > > > > map_sf;
-
 
     for(auto&& v : tree) { // YEAR LOOP
         if (j>=5) { break; } // early stop; for debugging
@@ -74,5 +109,5 @@ int read_json() {
         }
     }
     cout << endl << endl << endl;
-    return 0;
+    MAP_SF = map_sf; 
 }
