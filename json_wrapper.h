@@ -1,24 +1,21 @@
-#ifndef MULTILEP_H
-#define MULTILEP_H
+#ifndef JSONWRAPPER_H
+#define JSONWRAPPER_H
 
-#include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/one/EDAnalyzer.h"
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <map>
+#include <iostream>
 
-#include "FWCore/Framework/interface/Event.h"
-#include "FWCore/Framework/interface/LuminosityBlock.h"
-#include "FWCore/Framework/interface/Run.h"
-#include "FWCore/Framework/interface/MakerMacros.h"
-#include "FWCore/ParameterSet/interface/ParameterSet.h"
+namespace pt = boost::property_tree;
+using namespace std;
 
-#include "DataFormats/VertexReco/interface/VertexFwd.h"
-
-
-class json_wrapper
+class SF_Reader {
+    map< string, map< string, map< string, map< string, map<string, double> > > > > map_sf;
 
     public:
-
-    private:
-
-    };
+    void read_json(string);
+    double value (string, string, string, string);
+    double error (string, string, string, string);
+};
 
 #endif
