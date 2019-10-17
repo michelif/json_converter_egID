@@ -27,15 +27,15 @@ void SF_Reader::read_json(string json_file) {
             const pt::ptree & tree_pt = sv.second; 
 
             for(auto&& ssv : tree_pt) { // PT LOOP
-                [[maybe_unused]] const string & k_pt = ssv.first; 
+                const string & k_pt = ssv.first; 
                 const pt::ptree & tree_eta = ssv.second; 
 
                 for(auto&& sssv: tree_eta) { // ETA LOOP
-                    [[maybe_unused]] const string & k_eta = sssv.first; 
+                    const string & k_eta = sssv.first; 
                     const pt::ptree & tree_val_err = sssv.second; 
 
                     for(auto&& ssssv: tree_val_err) { // (VALUE, ERROR) LOOP
-                        [[maybe_unused]] const string & k_val_err = ssssv.first; 
+                        const string & k_val_err = ssssv.first; 
                         const pt::ptree & tree_pt_val_err = ssssv.second; 
 
                         if(tree_pt_val_err.empty()) {
