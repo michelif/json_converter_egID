@@ -30,8 +30,32 @@ void EGSFModifier::modifyObject(pat::Electron& ele)const
 {
   auto eta = ele.eta();
   auto pt  = ele.pt();
+
+  std::string pt_str;
+  std::string eta_str;
+
   std::string year = "2018";
   std::string ID = "mvaEleID-Fall17-noIso-V2-wp80";
+
+  // FIND RIGHT PT BIN
+  if (eta > -2.5   && pt < -2.0  ) {eta_str = "eta:[-2.5,-2.0]";    }
+  if (eta > -2.0   && pt < -1.566) {eta_str = "eta:[-2.0,-1.566]";  }
+  if (eta > -1.566 && pt < -1.444) {eta_str = "eta:[-1.566,-1.444]";}
+  if (eta > -1.444 && pt < -0.8  ) {eta_str = "eta:[-1.444,-0.8]";  }
+  if (eta > -0.8   && pt < 0.0   ) {eta_str = "eta:[-0.8,0.0]";     }
+  if (eta > 0.0    && pt < 0.8   ) {eta_str = "eta:[0.0,0.8]";      }
+  if (eta > 0.8    && pt < 1.444 ) {eta_str = "eta:[0.8,1.444]";    }
+  if (eta > 1.444  && pt < 1.566 ) {eta_str = "eta:[1.444,1.566]";  }
+  if (eta > 1.566  && pt < 2.0   ) {eta_str = "eta:[1.566,2.0]";    }
+  if (eta > 2.0    && pt < 2.5   ) {eta_str = "eta:[2.0,2.5]";      }
+
+  if (pt > 10.0  && pt < 20.0 ) {pt_str = "pt:[10.0,20.0]";  }
+  if (pt > 20.0  && pt < 35.0 ) {pt_str = "pt:[20.0,35.0]";  }
+  if (pt > 35.0  && pt < 50.0 ) {pt_str = "pt:[35.0,50.0]";  }
+  if (pt > 50.0  && pt < 100.0) {pt_str = "pt:[50.0,100.0]"; }
+  if (pt > 100.0 && pt < 200.0) {pt_str = "pt:[100.0,200.0]";}
+  if (pt > 200.0 && pt < 500.0) {pt_str = "pt:[200.0,500.0]";}
+
   
   SF_Reader sf;
   sf.read_json("run2_eleIDs.json");
